@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多人在线实时战略游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- 顶部信息栏 -->
+        <div class="game-header">
+            <div class="player-info">
+                <span class="player-name">玩家 <span id="playerId">-</span></span>
+                <div class="resources">
+                    <span class="resource gold">💰 <span id="gold">100</span></span>
+                    <span class="resource wood">🪵 <span id="wood">100</span></span>
+                </div>
+            </div>
+            <div class="game-status">
+                <span id="connectionStatus" class="status disconnected">未连接</span>
+                <button id="startGameBtn" class="btn btn-primary">开始游戏</button>
+            </div>
+        </div>
+
+        <!-- 游戏主区域 -->
+        <div class="game-main">
+            <!-- 左侧建筑面板 -->
+            <div class="building-panel">
+                <h3>建筑</h3>
+                <div class="building-list">
+                    <button class="building-btn" data-building="base" data-cost-gold="0" data-cost-wood="0">
+                        <span class="icon">🏛️</span>
+                        <span>基地</span>
+                    </button>
+                    <button class="building-btn" data-building="barracks" data-cost-gold="50" data-cost-wood="30">
+                        <span class="icon">🏚️</span>
+                        <span>兵营</span>
+                    </button>
+                    <button class="building-btn" data-building="gold-mine" data-cost-gold="20" data-cost-wood="40">
+                        <span class="icon">⛏️</span>
+                        <span>金矿</span>
+                    </button>
+                    <button class="building-btn" data-building="lumber-camp" data-cost-gold="30" data-cost-wood="20">
+                        <span class="icon">🪓</span>
+                        <span>伐木场</span>
+                    </button>
+                </div>
+
+                <h3>单位</h3>
+                <div class="unit-list">
+                    <button class="unit-btn" data-unit="worker" data-cost-gold="25" data-cost-wood="10">
+                        <span class="icon">👷</span>
+                        <span>工人</span>
+                    </button>
+                    <button class="unit-btn" data-unit="soldier" data-cost-gold="50" data-cost-wood="20">
+                        <span class="icon">⚔️</span>
+                        <span>战士</span>
+                    </button>
+                    <button class="unit-btn" data-unit="archer" data-cost-gold="40" data-cost-wood="30">
+                        <span class="icon">🏹</span>
+                        <span>弓箭手</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 游戏画布 -->
+            <div class="canvas-container">
+                <canvas id="gameCanvas"></canvas>
+                <div class="minimap">
+                    <canvas id="minimapCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- 右侧信息面板 -->
+            <div class="info-panel">
+                <h3>游戏信息</h3>
+                <div class="info-content">
+                    <p>玩家数量: <span id="playerCount">0</span></p>
+                    <p>单位数量: <span id="unitCount">0</span></p>
+                    <p>建筑数量: <span id="buildingCount">0</span></p>
+                </div>
+                <div class="selected-info" id="selectedInfo">
+                    <h4>选中对象</h4>
+                    <p id="selectedName">无</p>
+                    <p id="selectedHealth">生命: -</p>
+                    <p id="selectedStats">属性: -</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部控制栏 -->
+        <div class="game-controls">
+            <button class="btn" id="pauseBtn">暂停</button>
+            <button class="btn" id="restartBtn">重新开始</button>
+            <button class="btn" id="helpBtn">帮助</button>
+        </div>
+    </div>
+
+    <!-- 帮助模态框 -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>游戏帮助</h2>
+            <div class="help-text">
+                <h3>基本操作</h3>
+                <ul>
+                    <li><strong>选择单位</strong>：点击单位或拖拽框选</li>
+                    <li><strong>移动</strong>：右键点击地面移动单位</li>
+                    <li><strong>攻击</strong>：右键点击敌人进行攻击</li>
+                    <li><strong>建造</strong>：选择建筑类型，点击地面建造</li>
+                    <li><strong>生产单位</strong>：选中建筑，点击单位按钮</li>
+                </ul>
+                <h3>资源</h3>
+                <ul>
+                    <li>💰 黄金：用于建造和训练</li>
+                    <li>🪵 木材：用于建造和训练</li>
+                </ul>
+                <h3>胜利条件</h3>
+                <p>摧毁敌方基地获得胜利！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏结束模态框 -->
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2 id="gameOverTitle">游戏结束</h2>
+            <p id="gameOverMessage"></p>
+            <button class="btn btn-primary" id="playAgainBtn">再来一局</button>
+        </div>
+    </div>
+
+    <!-- Socket.io 客户端 -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
