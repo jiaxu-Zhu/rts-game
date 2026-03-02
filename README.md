@@ -15,10 +15,12 @@
 ### 前端部署（GitHub Pages）
 
 1. Fork 本仓库
-2. 启用 GitHub Pages（Settings → Pages → Source: main branch）
+2. 启用 GitHub Pages（Settings → Pages → Source: main branch /docs folder）
 3. 访问 `https://你的用户名.github.io/rts-game`
 
-### 后端部署（推荐 Railway）
+### 后端部署（必须）
+
+游戏需要后端服务器支持多人联机。推荐部署到 Railway 或 Render：
 
 ```bash
 # 克隆项目
@@ -32,6 +34,15 @@ npm install
 npm start
 ```
 
+服务器默认运行在 `http://localhost:3000`
+
+### 连接游戏
+
+1. 启动后端服务器
+2. 打开前端页面（GitHub Pages）
+3. 点击"开始游戏"自动连接服务器
+4. 邀请朋友一起玩！
+
 ## 🎮 游戏玩法
 
 1. **采集资源**：点击金矿和木材开始采集
@@ -44,10 +55,9 @@ npm start
 
 ```
 rts-game/
-├── public/           # 前端静态文件
-│   ├── index.html   # 主页面
-│   ├── style.css    # 样式
-│   └── game.js      # 游戏逻辑
+├── index.html       # 主页面（前端）
+├── style.css        # 样式
+├── game.js          # 游戏逻辑
 ├── server.js        # 后端服务器
 ├── package.json     # 依赖配置
 └── README.md        # 说明文档
@@ -57,7 +67,7 @@ rts-game/
 
 - **前端**：HTML5 Canvas, Vanilla JavaScript
 - **后端**：Node.js, Express, Socket.io
-- **部署**：GitHub Pages + Railway/Render
+- **部署**：GitHub Pages (前端) + Railway/Render (后端)
 
 ## 📝 开发计划
 
